@@ -1,0 +1,29 @@
+.home-header {
+    text-align: center;
+    margin: auto;
+    padding: 76px;
+}
+.home-title {
+    color: rgb(68, 97, 68);
+}
+
+.card {
+    margin-top: 19px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.home-card-button {
+    width: 305px;
+    background-color: rgb(68, 97, 68);
+    color: white;
+    font-size: 20px;
+    padding: 53px;
+    border-radius: 20px;
+    cursor: pointer;
+    border: rgb(68, 97, 68) solid;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0px 0px 5px 1px black;
+}
