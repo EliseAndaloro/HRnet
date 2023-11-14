@@ -13,6 +13,8 @@ import {
     checkValidForm,
     submitForm,
 } from "../../redux/actions";
+import Modal from "../modal/Modal";
+//import { Modal } from "simple-modal-hrnet";
 
 
 /**
@@ -95,6 +97,8 @@ function Form() {
     const [zipCodeError, setZipCodeError] = useState("");
     const [departmentError, setDepartmentError] = useState("");
 
+    const [modal, setModal] = useState(false);
+
     /**
      * Validation formulaire et affichage des erreurs.
      * @returns {boolean} Retourne true si erreurs, sinon false.
@@ -102,31 +106,31 @@ function Form() {
     const validateForm = () => {
         let isError = false;
         if (!firstName) {
-            setFirstNameError("Veuillez renseigner un prénom.");
+            setFirstNameError("Provide a firstname.");
             isError = true;
         } else {
             setFirstNameError("");
         }
         if (!lastName) {
-            setLastNameError("Veuillez renseigner un nom.");
+            setLastNameError("Provide a lastname.");
             isError = true;
         } else {
             setLastNameError("");
         }
         if (!birthDate) {
-            setBirthDateError("Sélectionner une date de naissance.");
+            setBirthDateError("Select a date of birth.");
             isError = true;
         } else {
             const now = new Date();
             if (birthDate > now) {
-                setBirthDateError("La date de naissance ne peut pas être une date future.");
+                setBirthDateError("The birth date cannot be a futur date.");
                 isError = true;
             } else {
                 const ageDiffMs = now.getTime() - birthDate.getTime();
                 const ageDate = new Date(ageDiffMs);
                 const age = Math.abs(ageDate.getUTCFullYear() - 1970);
                 if (age < 18) {
-                    setBirthDateError("Vous devez être majeur.");
+                    setBirthDateError("You must be of legal age.");
                     isError = true;
                 } else {
                     setBirthDateError("");
@@ -134,48 +138,49 @@ function Form() {
             }
         }
         if (!startDate) {
-            setStartDateError("Selectionnez une date de début.");
+            setStartDateError("Select a start date.");
             isError = true;
         } else {
             const ageDiffMs = startDate.getTime() - birthDate.getTime();
             const ageDate = new Date(ageDiffMs);
             const age = Math.abs(ageDate.getUTCFullYear() - 1970);
+            console.log(age);
             if (age < 18) {
-                setStartDateError("Vous devez être majeur.");
+                setStartDateError("You must be of legal age.");
                 isError = true;
             } else if (startDate.getTime() === birthDate.getTime()) {
-                setStartDateError("La date de début ne doit pas être la même que la date de naissance.");
+                setStartDateError("Start date and borth date cannot be the same.");
                 isError = true;
             } else {
                 setStartDateError("");
             }
         }
         if (!street) {
-            setStreetError("Veuillez renseigner une rue.");
+            setStreetError("Provide a street.");
             isError = true;
         } else {
             setStreetError("");
         }
         if (!city) {
-            setCityError("Veuillez renseigner une ville.");
+            setCityError("Provide a city.");
             isError = true;
         } else {
             setCityError("");
         }
         if (!state) {
-            setStateError("Veuillez renseigner un pays.");
+            setStateError("Provide a country.");
             isError = true;
         } else {
             setStateError("");
         }
         if (!zipCode) {
-            setZipCodeError("Veuillez renseigner un code postal.");
+            setZipCodeError("Provide a ZIP code.");
             isError = true;
         } else {
             setZipCodeError("");
         }
         if (!department) {
-            setDepartmentError("Veuillez choisir un departement.");
+            setDepartmentError("Provide a department.");
             isError = true;
         } else {
             setDepartmentError("");
@@ -231,9 +236,27 @@ function Form() {
             const submit = dispatch(checkValidForm());
             if (submit) {
                 dispatch(submitForm(employee));
+                setModal(true);
             }
         }
     };
+
+    /**
+     * Fermeture de la modal et réinitialisation du formulaire
+     * @function
+     * @return {void}
+     */
+    const resetForm = () => {
+        document.getElementById("formulaire").reset();
+        setModal(false);
+        setFirstName("");
+        setLastName("");
+        setCity("");
+        setBirthDate(new Date());
+        setStartDate(new Date());
+        setDepartment("");
+        setState("");
+    }
 
     /**
      * Le prénom doit être composé de lettres.
@@ -376,11 +399,25 @@ function Form() {
                     )}
                 </section>
             </form>
+            {/**
+             * Composant qui affiche un bouton "Sauvegarder" et un Modal en fonction de l'état de la variable 'modal'
+             * @component
+             * @param {Function} saveEmployee - Fonction qui sera exécutée lors du clic sur le bouton 'Save'
+             * @param {Boolean} modal - Booléen qui indique si le Modal doit être affiché ou non
+             * @param {Function} resetFormCloseModal - Fonction qui remet à zéro le formulaire et ferme le Modal
+             * @returns {JSX.Element} Composant react qui affiche un bouton "Sauvegarder" et un Modal
+             */}
             <div className="button-save">
                 <button className="button_btn" onClick={saveEmployee}>
                     {" "}
                     Save{" "}
                 </button>
+                {modal && (
+                    <Modal
+                        message={"employee created"}
+                        closeModal={resetForm}
+                    />
+                )}
             </div>
         </>
     );

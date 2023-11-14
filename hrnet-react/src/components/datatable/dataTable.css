@@ -1,0 +1,43 @@
+.rdt_TableCol {
+    display: flex;
+    justify-content: space-around;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    font-size: 18px;
+    background-color: #93ad18;
+}
+.rdt_TableCol :hover {
+    color: white;
+}
+.rdt_TableCell {
+    display: flex;
+    justify-content: space-around;
+    justify-content: center;
+    align-items: center;
+    font-size: 15px;
+}
+.hXLGuA {
+    position: relative;
+    width: 95%;
+    border-radius: 20px;
+    overflow: auto hidden;
+    min-height: 0px;
+    margin: auto;
+}
+
+.kTRUaX button,
+.kTRUaX input {
+    font-size: 20px;
+    color: #9c9c9c;
+    border: #9c9c9c solid;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+@media (max-width: 653px) {
+    .kTRUaX button,
+    .kTRUaX input {
+        font-size: 18px;
+    }
+}

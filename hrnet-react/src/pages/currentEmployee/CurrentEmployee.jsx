@@ -1,4 +1,5 @@
 import React from "react";
+import DataTable from "../../components/datatable/DataTable";
 import "./currentEmployee.css";
 
 /**
@@ -11,6 +12,7 @@ const CurrentEmployees = () => {
         <>
             <section className="enteteTable">
                 <h2 className="title">Current Employees</h2>
+                <DataTable />
             </section>
         </>
     );
